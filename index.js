@@ -22,20 +22,23 @@ let notes = [
     important: true,
   },
 ];
-// const app = http.createServer((request, response) => {
-//   response.writeHead(200, { "Content-Type": "application/json" });
-//   response.end(JSON.stringify(notes));
-// });
-// const app = http.createServer((request, response) => {
-//   response.writeHead(200, { "Content-Type": "application/json" });
-//   response.end(JSON.stringify(notes));
-// });
-app.get('/', (request, response)=>{
-    response.send("<h1>Hello Server</h1>");
-})
 
-app.get("/notes", (request, response) => {
-response.json(notes);
+// homepage request
+app.get("/", (request, response) => {
+  response.send("<h1>Hello Server</h1>");
+});
+
+// get all notes request
+app.get("/notes/", (request, response) => {
+  response.json(notes);
+});
+
+// get specific note (by id) request
+app.get("/notes/:id", (request, response) => {
+  console.log(request.params.id);
+  const id = request.params.id;
+  const note = notes.find((note) => note.id == id);
+  response.send(note);
 });
 
 const PORT = 3001;
